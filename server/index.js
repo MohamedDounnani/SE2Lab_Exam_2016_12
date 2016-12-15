@@ -30,6 +30,7 @@ app.get('/', function(request, response)
 	//answer
 	headers["Content-Type"] = "text/html";
 	response.writeHead(200, headers);
+	response.end("Students");
 	
 });
 
