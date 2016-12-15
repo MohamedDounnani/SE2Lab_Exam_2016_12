@@ -30,7 +30,7 @@ app.get('/', function(request, response)
 	//answer
 	headers["Content-Type"] = "text/html";
 	response.writeHead(200, headers);
-	response.end("Welcome student");
+	
 });
 
 /**
@@ -44,6 +44,7 @@ app.get('/showList', function(request, response)
 	response.writeHead(200, headers);
 	response.end(JSON.stringify(studentManager.getList()));
 });
+
 
 /**
  * @brief search a student
@@ -272,3 +273,50 @@ app.listen(app.get('port'), function() {
 });
 
 //AGGIUNGERE QUI SOTTO NUOVE FUNZIONI
+
+//FUNZIONE CHE PRENDE IL MARK E CERCA LO/GLI STUDENTI CON IL LIMITE MARK
+
+app.post('/searchByMark', function(request, response) 
+{	
+	var studenti = [];
+	var headers = {};
+	headers["Access-Control-Allow-Origin"] = "*";
+	headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+	headers["Access-Control-Allow-Credentials"] = false;
+	headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+	headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+	headers["Content-Type"] = "application/json";
+
+	var students_pre_Mark = []; // variabile a cui viene assocciato il valore preso <num o >num
+	
+	//check body and parameters
+	if ( typeof request.body !== 'undefined' && request.body)
+	{
+		if (typeof request.body.mark !== 'undefined' && request.body.mark)
+            {
+			students_pre_Mark = request.body.mark;
+            }
+		else 
+			students_pre_Mark = "not defined";
+	}
+	else
+	{
+		students_pre_Mark = "body undefined";
+	}
+    
+    if (students_pre_Mark!="not defined" && students_pre_Mark!="body undefined")
+	{
+		
+		studenti = studentManager.SearchByMark(students_pre_Mark[0],students_pre_Mark[1]);
+		response.writeHead(406, headers);
+		response.end(JSON.stringify(studenti));
+	}
+    else    
+	{
+		//unaceptable input
+		response.writeHead(406, headers);
+		response.end(JSON.stringify("1"));
+	}   
+
+});
+

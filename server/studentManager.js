@@ -135,6 +135,39 @@ var insertStudent = function insertStudent(student)
 
 //AGGIUNGERE QUI SOTTO NUOVE FUNZIONI
 
+/*
+ * @brief This function search for a student, given mark limit
+ * @param StringID
+ */
+var searchByMark = function searchByMark(segno,mark)
+{
+ 
+  var array = [];
+    switch(segno){
+    case "<":
+    for (i=0; i < studentList.length; i++)
+	{
+		if (studentList[i].mark < mark)
+		{
+			array.push=studentList[i];
+		}
+    }
+    break;
+    case ">":
+    for (i=0; i < studentList.length; i++)
+	{
+		if (studentList[i].mark > mark)
+		{
+			array.push=studentList[i];
+		}
+    }
+    break;
+    default: break;
+    }
+    //if reach this point return null
+    return studentList[i];
+    
+}
 
 
 //export functions
